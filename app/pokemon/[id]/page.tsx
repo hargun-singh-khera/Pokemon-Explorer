@@ -113,54 +113,70 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
         <div className="mt-6 grid gap-6 lg:grid-cols-2">
           <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100 sm:p-8">
             <h2 className="text-lg font-bold text-gray-900">Abilities</h2>
-            <div className="mt-4 space-y-2">
-              {pokemon.abilities.map((abilityEntry) => (
-                <div
-                  key={abilityEntry.ability.name}
-                  className="flex items-center justify-between rounded-xl border border-gray-100 bg-gray-50 px-4 py-3"
-                >
-                  <span className="text-sm font-semibold capitalize text-gray-800">
-                    {abilityEntry.ability.name.replace("-", " ")}
-                  </span>
-                  {abilityEntry.is_hidden && (
-                    <span className="rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-semibold text-purple-600">
-                      Hidden
+            {pokemon.abilities.length === 0 ? (
+              <p className="mt-4 text-sm text-gray-400">No abilities recorded.</p>
+            ) : (
+              <div className="mt-4 space-y-2">
+                {pokemon.abilities.map((abilityEntry) => (
+                  <div
+                    key={abilityEntry.ability.name}
+                    className="flex items-center justify-between rounded-xl border border-gray-100 bg-gray-50 px-4 py-3"
+                  >
+                    <span className="text-sm font-semibold capitalize text-gray-800">
+                      {abilityEntry.ability.name.replace("-", " ")}
                     </span>
-                  )}
-                </div>
-              ))}
-            </div>
+                    {abilityEntry.is_hidden && (
+                      <span className="rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-semibold text-purple-600">
+                        Hidden
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
 
           <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100 sm:p-8">
             <h2 className="text-lg font-bold text-gray-900">Base Stats</h2>
-            <div className="mt-4 space-y-4">
-              {pokemon.stats.map((statEntry) => (
-                <StatBar key={statEntry.stat.name} label={statEntry.stat.name} value={statEntry.base_stat} />
-              ))}
-            </div>
+            {pokemon.stats.length === 0 ? (
+              <p className="mt-4 text-sm text-gray-400">No stats recorded.</p>
+            ) : (
+              <div className="mt-4 space-y-4">
+                {pokemon.stats.map((statEntry) => (
+                  <StatBar key={statEntry.stat.name} label={statEntry.stat.name} value={statEntry.base_stat} />
+                ))}
+              </div>
+            )}
           </section>
         </div>
 
         <section className="mt-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100 sm:p-8">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-gray-900">Moves</h2>
-            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-500">
-              {pokemon.moves.length} total
-            </span>
-          </div>
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {pokemon.moves.slice(0, 40).map((moveEntry) => (
-              <span
-                key={moveEntry.move.name}
-                className="rounded-lg bg-gray-50 px-2.5 py-1.5 text-xs font-medium capitalize text-gray-600 ring-1 ring-gray-100"
-              >
-                {moveEntry.move.name.replace("-", " ")}
+            {pokemon.moves.length > 0 && (
+              <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-500">
+                {pokemon.moves.length} total
               </span>
-            ))}
+            )}
           </div>
-          {pokemon.moves.length > 40 && (
-            <p className="mt-4 text-xs text-gray-400">Showing 40 of {pokemon.moves.length} moves.</p>
+          {pokemon.moves.length === 0 ? (
+            <p className="mt-4 text-sm text-gray-400">No moves recorded.</p>
+          ) : (
+            <>
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {pokemon.moves.slice(0, 40).map((moveEntry) => (
+                  <span
+                    key={moveEntry.move.name}
+                    className="rounded-lg bg-gray-50 px-2.5 py-1.5 text-xs font-medium capitalize text-gray-600 ring-1 ring-gray-100"
+                  >
+                    {moveEntry.move.name.replace("-", " ")}
+                  </span>
+                ))}
+              </div>
+              {pokemon.moves.length > 40 && (
+                <p className="mt-4 text-xs text-gray-400">Showing 40 of {pokemon.moves.length} moves.</p>
+              )}
+            </>
           )}
         </section>
       </section>
