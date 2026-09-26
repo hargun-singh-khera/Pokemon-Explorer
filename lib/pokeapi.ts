@@ -1,7 +1,7 @@
 import type { Pokemon, PokemonListItem, PokemonListResponse } from "@/types/pokemon";
 
 const API = "https://pokeapi.co/api/v2";
-const FETCH_ALL_LIMIT = 2000;
+const FETCH_ALL_LIMIT = 100000;
 
 export async function getPokemons(limit = 20, offset = 0): Promise<PokemonListResponse> {
   const response = await fetch(`${API}/pokemon?limit=${limit}&offset=${offset}`, {
